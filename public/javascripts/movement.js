@@ -1,5 +1,4 @@
 (function(){
-    "use strict";
     function movePlayer(direction) {
 	var movedist = 3;
 	if(direction==="right") {
