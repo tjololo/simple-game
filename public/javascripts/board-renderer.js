@@ -1,15 +1,11 @@
-var Board = this.Board || {};
-
-
-
-(function(B){
+define([], function() {
     function createElement(className) {
 	var el = document.createElement("div");
 	el.className = className;
 	return el;
     }
 
-    B.renderBoard= function(gameBoard) {
+    function render(gameBoard) {
 	var board =  createElement("board");
 	gameBoard.forEach(function(gameRow) {
 	    var row = createElement("row");
@@ -21,4 +17,8 @@ var Board = this.Board || {};
 	});
 	return board;
     }
-}(Board));
+
+    return {
+	renderBoard: render
+    }
+});

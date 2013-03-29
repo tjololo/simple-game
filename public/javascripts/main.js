@@ -1,6 +1,7 @@
 requirejs.config({
-    baseUrl: 'javascripts/',
+    baseUrl: 'javascripts/'
 });
-require(["jquery"], function($) {
-    
+require(["jquery", "play"], function($, Game) {
+    console.log("about to start game");
+    Game.start();
 });

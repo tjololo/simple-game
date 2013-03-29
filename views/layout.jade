@@ -3,10 +3,6 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
-    script(type='text/javaScript', src='javascripts/jquery.js')
-    script(type='text/javaScript', src='javascripts/keyboard.js')
-    script(type='text/javaScript', src='javascripts/board-renderer.js')
-    script(type='text/javaScript', src='javascripts/dummyBoard.js')
-    script(type='text/javaScript', src='javascripts/movement.js')
+    script(data-main='javascripts/main.js', src='javascripts/require-jquery.js')
   body
     block content
