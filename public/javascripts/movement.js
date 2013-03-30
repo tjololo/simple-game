@@ -1,5 +1,5 @@
 define(["keyboard"], function(KeyboardJS) {
-    var move = false;
+    var connection = new WebSocket('ws://127.0.0.1:3000');
     function movePlayer(direction) {
 	var movedist = 1;
 	if(direction==="right") {
@@ -36,6 +36,7 @@ define(["keyboard"], function(KeyboardJS) {
     }
  
     function dropBomb() {
+	connection.send(JSON.stringify({type: "drop", msg: "BOMBS AWAY"}));
 	console.log("BOMBS AWAY!");
     }
 
