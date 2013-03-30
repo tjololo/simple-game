@@ -16,52 +16,23 @@ define(["keyboard"], function(KeyboardJS) {
     }
 
     function moveLeft(){
-	if(move) {
-	    movePlayer("left");
-	}
+	movePlayer("left");
     }
     
-    function startMoveLeft() {
-	move = true;
-	moveLeft();
-    }
-
     function moveRight() {
-	if(move) {
-	    movePlayer("right");
-	}
-    }
-
-    function startMoveRight() {
-	move = true;
-	moveRight();
+	movePlayer("right");
     }
     
     function moveDown() {
-	if(move) {
-	    movePlayer("down");
-	}
+	movePlayer("down");
     }
     
-    function startMoveDown() {
-	move = true;
-	moveDown();
-    }
-
     function moveUp() {
-	if(move) {
-	    movePlayer("up");
-	}
-    }
-
-    function startMoveUp() {
-	move = true;
-	moveUp();
+	movePlayer("up");
     }
     
     function stopMove() {
-	console.log("Stop");
-	move = false;
+	$("#player1").stop();
     }
 
     function disableDefaults() {
@@ -78,10 +49,10 @@ define(["keyboard"], function(KeyboardJS) {
     function registerKeys() {
 	disableDefaults();
 	console.log("Registering keys");
-	KeyboardJS.on('left', startMoveLeft, stopMove);
-	KeyboardJS.on('right', startMoveRight, stopMove);
-	KeyboardJS.on('down', startMoveDown, stopMove);
-	KeyboardJS.on('up', startMoveUp, stopMove);
+	KeyboardJS.on('left', moveLeft, stopMove);
+	KeyboardJS.on('right', moveRight, stopMove);
+	KeyboardJS.on('down', moveDown, stopMove);
+	KeyboardJS.on('up', moveUp, stopMove);
 	console.log("Keys registered");
     }
 
