@@ -19,7 +19,7 @@ var MessageHandler = require('./message-handler');
 		var index = clients.push(connection);
 		
 		connection.on('close', function() {
-		    clients.splice(index, 1);
+		    clients.splice(index-1, 1);
 		});
 
 		connection.sendUTF(JSON.stringify({type:"playernbr", number:clients.length}));
