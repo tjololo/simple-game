@@ -7,6 +7,10 @@ a {
   color: #00B7FF;
 }
 
+.board {
+    display: inline-block;
+}
+
 .row{
     clear:both;
 }
@@ -22,6 +26,30 @@ a {
 }
 
 #player1{
+    top: 0px;
+    left: 0px;
+    width: 20px;
+    height: 30px;
+    position: absolute;
+    background:url(/images/bomberman-sprites.png) -50px -35px;
+}
+#player2{
+    top: 0px;
+    left: 0px;
+    width: 20px;
+    height: 30px;
+    position: absolute;
+    background:url(/images/bomberman-sprites.png) -50px -35px;
+}
+#player3{
+    top: 0px;
+    left: 0px;
+    width: 20px;
+    height: 30px;
+    position: absolute;
+    background:url(/images/bomberman-sprites.png) -50px -35px;
+}
+#player4{
     top: 0px;
     left: 0px;
     width: 20px;

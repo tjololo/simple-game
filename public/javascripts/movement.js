@@ -53,7 +53,7 @@ define(["keyboard"], function(KeyboardJS) {
     }
     
     function stopMove() {
-	$("#player1").stop();
+	$("#player"+playernbr).stop();
     }
  
     function dropBomb() {
