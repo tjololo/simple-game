@@ -34,9 +34,13 @@ define(["keyboard"], function(KeyboardJS) {
     function stopMove() {
 	$("#player1").stop();
     }
+ 
+    function dropBomb() {
+	console.log("BOMBS AWAY!");
+    }
 
     function disableDefaults() {
-	var ar = new Array(37, 38, 39, 40);
+	var ar = new Array(32, 37, 38, 39, 40);
 	var disableArrowKeys = function(e) {
 	    if ($.inArray(e.keyCode, ar)>=0) {
 		e.preventDefault();
@@ -53,6 +57,7 @@ define(["keyboard"], function(KeyboardJS) {
 	KeyboardJS.on('right', moveRight, stopMove);
 	KeyboardJS.on('down', moveDown, stopMove);
 	KeyboardJS.on('up', moveUp, stopMove);
+	KeyboardJS.on('space', dropBomb);
 	console.log("Keys registered");
     }
 
