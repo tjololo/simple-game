@@ -21,18 +21,36 @@ define(["keyboard"], function(KeyboardJS) {
 	connection.send(JSON.stringify(msg));
     }
 
+    function canMove(direction) {
+	var board = $(".board");
+        var player = $("#player"+playernbr);
+	if(direction === "right") {
+	    return (board.position().left+board.width()) > (player.position().left + player.width());
+	}
+	if(direction === "left") {
+	    return board.position().left < player.position().left;
+	}
+	if(direction === "down") {
+	    return (board.position().top + board.height()) > (player.position().top + player.height());
+	}
+	if(direction === "up") {
+	    return board.position().top < player.position().top;
+	}
+    }
+
     function movePlayer(direction) {
-	var movedist = 5;
-	if(direction==="right") {
-	    $("#player"+playernbr).stop().animate({left:"+=" + movedist},60,moveRight);
-	} else if(direction==="left"){
-	    $("#player"+playernbr).stop().animate({left:"-=" + movedist},60, moveLeft);
-	} else if(direction==="down"){
-	    $("#player"+playernbr).stop().animate({top:"+=" + movedist},60, moveDown);
-	} else if(direction==="up"){
-	    $("#player"+playernbr).stop().animate({top:"-=" + movedist},60, moveUp);
-	} else {
-	    console.log("unknown direction");
+	if(canMove(direction)) {
+	    var movedist = 1;
+	    var player = $("#player"+playernbr);
+	    if(direction==="right") {
+		player.stop().animate({left:"+=" + movedist},1,moveRight);
+	    } else if(direction==="left"){
+		player.stop().animate({left:"-=" + movedist},1, moveLeft);
+	    } else if(direction==="down"){
+		player.stop().animate({top:"+=" + movedist},1, moveDown);
+	    } else if(direction==="up"){
+		player.stop().animate({top:"-=" + movedist},1, moveUp);
+	    }
 	}
     }
 
