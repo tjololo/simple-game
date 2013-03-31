@@ -96,7 +96,10 @@ define(["keyboard"], function(KeyboardJS) {
     }
  
     function dropBomb() {
-	connection.send(JSON.stringify({type: "drop", msg: "BOMBS AWAY"}));
+	var tile = $($(".board").children()[getRow()]).children()[getColumn()];
+	$(tile).css("background-color", "blue");
+	setTimeout(function() {$(tile).css("background-color", "#C0C0C0")}, 5000);
+	connection.send(JSON.stringify({type: "drop", row: getRow(), col: getColumn()}));
 	console.log((new Date())+"BOMBS AWAY!");
     }
 
