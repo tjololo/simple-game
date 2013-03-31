@@ -10,7 +10,12 @@ define([], function() {
 	gameBoard.forEach(function(gameRow) {
 	    var row = createElement("div","row");
 	    gameRow.forEach(function(gameBlock) {
-		var block = createElement("div","block");
+		var style = "block";
+		if(gameBlock.type==="permanent") {
+		    style += " permanent";
+		    console.log("style: " + style);
+		}
+		var block = createElement("div",style);
 		row.appendChild(block);
 	    });
 	    board.appendChild(row);

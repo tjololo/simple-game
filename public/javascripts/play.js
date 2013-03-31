@@ -2,7 +2,8 @@ define(["board-renderer","movement", "dummyServer"], function(B, Movement, Serve
     return {
 	//Starts "game" when page hase loaded
 	start: function() {
-	    var gameBoard = B.renderBoard(Server.getGameBoard(20,20));
+	    var gameBoard = B.renderBoard(Server.getGameBoard(19,19));
+	    console.log(gameBoard);
 	    $("#game").html(gameBoard);
 	    var game = $(".board");
 	    var position = game.position();

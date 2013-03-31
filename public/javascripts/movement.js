@@ -21,20 +21,41 @@ define(["keyboard"], function(KeyboardJS) {
 	connection.send(JSON.stringify(msg));
     }
 
+    function getRow() {
+	var player = $("#player"+playernbr);
+	var position = player.position().top+(player.height()/2);
+	return Math.floor((position-$(".board").position().top)/$(".block").height());
+    }
+
+    function getColumn() {
+	var player = $("#player"+playernbr);
+	var position = player.position().left+(player.width()/2);
+	return Math.floor((position-$(".board").position().left)/$(".block").width());
+    }
+    
+    function isBlockOpen(diffRow,diffColumn) {
+	var row = $(".board").children()[getRow()+diffRow];
+        var block = $(row).children()[getColumn()+diffColumn];
+        if($(block).hasClass("permanent")) {
+            return false;
+        }
+        return true;
+    }
+
     function canMove(direction) {
 	var board = $(".board");
         var player = $("#player"+playernbr);
 	if(direction === "right") {
-	    return (board.position().left+board.width()) > (player.position().left + player.width());
+	    return ((board.position().left+board.width()) > (player.position().left + player.width())) && isBlockOpen(0,1);
 	}
 	if(direction === "left") {
-	    return board.position().left < player.position().left;
+	    return (board.position().left < player.position().left) && isBlockOpen(0,-1);
 	}
 	if(direction === "down") {
-	    return (board.position().top + board.height()) > (player.position().top + player.height());
+	    return ((board.position().top + board.height()) > (player.position().top + player.height())) && isBlockOpen(1,0);
 	}
 	if(direction === "up") {
-	    return board.position().top < player.position().top;
+	    return (board.position().top < player.position().top) && isBlockOpen(-1,0);
 	}
     }
 
