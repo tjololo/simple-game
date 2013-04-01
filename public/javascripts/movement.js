@@ -1,5 +1,5 @@
 define(["keyboard"], function(KeyboardJS) {
-    var connection = new WebSocket('ws://192.168.3.117:3000');
+    var connection = new WebSocket("ws://" + document.domain + ":3000");
     var playernbr = 0;
     connection.onmessage = function(message) {
 	try {
