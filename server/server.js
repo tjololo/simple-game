@@ -2,7 +2,6 @@ var WebSocketServer = require('websocket').server;
 var MessageHandler = require('./message-handler');
 (function(){
     var clients = [];
-
     function sendMessage(msg) {
 	clients.forEach(function(client) {
 	    client.sendUTF(msg);

@@ -52,9 +52,12 @@ define(["keyboard"], function(KeyboardJS) {
     }
 
     function isBlockRemoveable(row,col) {
-	var row = $(".board").children()[row];
-        var block = $($(row).children()[col]);
-	return block.hasClass("blocked");
+	var elRow = $(".board").children()[row];
+        var block = $($(elRow).children()[col]);
+	if(block.hasClass("blocked")) {
+	    return {row:row, col:col};
+	}
+	return false;
     }
 
     function canMove(direction) {
@@ -135,20 +138,24 @@ define(["keyboard"], function(KeyboardJS) {
     }
 
     function removeExplodedBlocks(row, col) {
-	var blocksExploded = [];
-	if(isBlockRemoveable(row-1,col)) {
-	    blocksExploded.push({row:row-1,col:col});
+	var tilesBlocked = [];
+	var tile = isBlockRemoveable(row-1,col);
+	if(tile) {
+	    tilesBlocked.push(tile);
 	}
-	if(isBlockRemoveable(row+1,col)) {
-	    blocksExploded.push({row:row+1,col:col});
+	tile = isBlockRemoveable(row+1,col)
+	if(tile) {
+	    tilesBlocked.push(tile);
 	}
-	if(isBlockRemoveable(row,col-1)){
-	    blocksExploded.push({row:row,col:col-1});
+	tile = isBlockRemoveable(row,col-1)
+	if(tile){
+	    tilesBlocked.push(tile);
 	}
-	if(isBlockRemoveable(row,col+1)) {
-	    blocksExploded.push({row:row,col:col+1});
+	tile = isBlockRemoveable(row,col+1)
+	if(tile) {
+	    tilesBlocked.push(tile);
 	}
-	sendToServer({type:"remove", tiles:blocksExploded});
+	sendToServer({type:"remove", tiles:tilesBlocked});
     }
 
     function removeBlockers(tiles) {
@@ -169,7 +176,7 @@ define(["keyboard"], function(KeyboardJS) {
 	}
     }
 
-    function registerNewBomb(row, col) {
+    function registerNewBomb(row, col, bomb) {
 	var tile = $($(".board").children()[row]).children()[col];
 	$(tile).addClass("bomb");
 	setTimeout(
@@ -182,7 +189,7 @@ define(["keyboard"], function(KeyboardJS) {
 			removeExplodedBlocks(row,col);
 		    },100);
 		}, 100);
-	    }, 4000);
+	    }, 4800);
     }
 
     function disableDefaults() {
