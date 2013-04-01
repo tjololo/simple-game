@@ -15,7 +15,7 @@ var BoardGenerator = require('./board-generator');
 	    sendMessage(msg.utf8Data);
 	} else if(json.type==="genmap") {
 	    console.log("generation map");
-	    sendMessage(JSON.stringify({type:"map", map:BoardGenerator.genMap(19,19,9)}));
+	    sendMessage(JSON.stringify({type:"map", map:BoardGenerator.genMap(19,19,80)}));
 	} else {
 	    sendMessage(JSON.stringify({msg:"test response"}));
 	}

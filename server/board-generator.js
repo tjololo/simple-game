@@ -3,7 +3,7 @@
     var b = {type:"blocked"};
     var p = {type:"permanent"};
     
-    function generateBoard(rows, columns, blockers) {
+    function generateBoard(rows, columns, blockerChance) {
 	if(rows%2===0 || columns%2===0) {
 	    throw "Must have odd number of columns and rows";
 	}
@@ -16,12 +16,19 @@
 		} else if((i===1 && (j===1 || j===2 || j===columns-1 || j===columns)) || (i===2 && (j===1|| j===columns)) || (i===rows && (j===1 || j===2 || j===columns-1 || j===columns)) || (i===rows-1 && (j===1 || j===columns))) {
 		    row.push(o);
 		}else {
-		    row.push(b);
+		    row.push(randomOpen(blockerChance));
 		}
 	    }
 	    board.push(row);
 	}
 	return board;
+    }
+
+    function randomOpen(chanceForBlocked) {
+	if(Math.floor(Math.random() * 100) + 1 > chanceForBlocked) {
+	    return o;
+	}
+	return b;
     }
 
     module.exports = {
