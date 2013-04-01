@@ -10,6 +10,8 @@ define(["keyboard"], function(KeyboardJS) {
 	}
 	if(json.type==="move" && json.player !== playernbr) {
 	    $("#player"+json.player).animate({left:json.left, top:json.top},0);
+	} else if(json.type==="drop") {
+	    registerNewBomb(json.row,json.col);
 	} else if(json.type==="playernbr") {
 	    playernbr = json.number;
 	    console.log("This is player number: " + playernbr);
@@ -119,19 +121,23 @@ define(["keyboard"], function(KeyboardJS) {
     }
  
     function dropBomb() {
-	var tile = $($(".board").children()[getRow()]).children()[getColumn()];
+	connection.send(JSON.stringify({type: "drop", row: getRow(), col: getColumn()}));
+    }
+
+    function registerNewBomb(row, col) {
+	var tile = $($(".board").children()[row]).children()[col];
 	$(tile).addClass("bomb");
 	setTimeout(
 	    function() {
-		$(tile).removeClass("bomb").addClass("bomb2");
+		$(tile).addClass("bomb2");
 		setTimeout(function() {
-		    $(tile).removeClass("bomb2").addClass("bomb3");
+		    $(tile).addClass("bomb3");
 		    setTimeout(function() {
-			$(tile).removeClass("bomb3");
+			$(tile).removeClass("bomb3").removeClass("bomb2").removeClass("bomb");
+			console.log((new Date()).getTime());
 		    },100);
 		}, 100);
 	    }, 4000);
-	connection.send(JSON.stringify({type: "drop", row: getRow(), col: getColumn()}));
     }
 
     function disableDefaults() {

@@ -10,7 +10,9 @@
 //	console.log("received a message" + json.msg);
 	if(json.type==="move") {
 	    sendMessage(msg.utf8Data);
-	} else {
+	} if(json.type=="drop") {
+	    sendMessage(msg.utf8Data);
+	}else {
 	    sendMessage(JSON.stringify({msg:"test response"}));
 	}
     }
