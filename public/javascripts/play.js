@@ -1,4 +1,4 @@
-define(["board-renderer","movement", "dummyServer"], function(B, Movement, Server) {
+define(["board-renderer","movement", "server"], function(B, Movement, Server) {
     return {
 	//Starts "game" when page hase loaded
 	start: function() {
