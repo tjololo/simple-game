@@ -1,4 +1,6 @@
 define([],function() {
+    var connection = null;
+    var consumers = [];
     function generateDummyBoard(rows,colums) {
 	var board =[];
 	for(var i = 1; i <= rows; ++i) {
@@ -17,7 +19,23 @@ define([],function() {
 	return board;
     }
 
-    return {
-	getGameBoard: generateDummyBoard
+    function registerMessageListener(listener) {
+	consumers.push(listener);
+    }
+
+    function send(msg) {
+	connection.send(msg);
+    }
+
+    return function Server(conn){
+	connection = conn;
+	connection.onmessage = function(message) {
+	    consumers.forEach(function(consumer) {
+		consumer(message);
+	    });
+	}
+	this.getGameBoard = generateDummyBoard;
+	this.registerMessageListener = registerMessageListener;
+	this.send = send;
     }
 });

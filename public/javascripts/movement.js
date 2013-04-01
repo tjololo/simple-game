@@ -1,7 +1,7 @@
 define(["keyboard"], function(KeyboardJS) {
-    var connection = new WebSocket("ws://" + document.domain + ":3000");
-    var playernbr = 0;
-    connection.onmessage = function(message) {
+    var playernbr = 1;
+
+    function onMessage(message) {
 	try {
 	    var json = JSON.parse(message.data);
 	} catch (e) {
@@ -16,11 +16,11 @@ define(["keyboard"], function(KeyboardJS) {
 	    playernbr = json.number;
 	    console.log("This is player number: " + playernbr);
 	}
-    };
+    }
 
     function sendToServer(msg) {
 	msg.player = playernbr;
-	connection.send(JSON.stringify(msg));
+	this.server.send(JSON.stringify(msg));
     }
 
     function getRow() {
@@ -121,7 +121,7 @@ define(["keyboard"], function(KeyboardJS) {
     }
  
     function dropBomb() {
-	connection.send(JSON.stringify({type: "drop", row: getRow(), col: getColumn()}));
+	sendToServer({type: "drop", row: getRow(), col: getColumn()});
     }
 
     function registerNewBomb(row, col) {
@@ -134,7 +134,6 @@ define(["keyboard"], function(KeyboardJS) {
 		    $(tile).addClass("bomb3");
 		    setTimeout(function() {
 			$(tile).removeClass("bomb3").removeClass("bomb2").removeClass("bomb");
-			console.log((new Date()).getTime());
 		    },100);
 		}, 100);
 	    }, 4000);
@@ -168,7 +167,9 @@ define(["keyboard"], function(KeyboardJS) {
 	window.setInterval(updateServer, 50);
     }
 
-    return {
-	registerKeys: registerKeys
+    return function Movement(s){
+	server = s;
+	server.registerMessageListener(onMessage);
+	this.registerKeys = registerKeys;
     }
 });

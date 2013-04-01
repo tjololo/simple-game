@@ -2,7 +2,9 @@ define(["board-renderer","movement", "dummyServer"], function(B, Movement, Serve
     return {
 	//Starts "game" when page hase loaded
 	start: function() {
-	    var gameBoard = B.renderBoard(Server.getGameBoard(19,19));
+	    var connection = new WebSocket("ws://" + document.domain + ":3000");
+	    var server = new Server(connection);
+	    var gameBoard = B.renderBoard(server.getGameBoard(19,19));
 	    $("#game").html(gameBoard);
 	    var game = $(".board");
 	    var position = game.position();
@@ -12,7 +14,12 @@ define(["board-renderer","movement", "dummyServer"], function(B, Movement, Serve
 	    $("#player2").css({left:position.left+width,top:position.top});
 	    $("#player3").css({left:position.left,top:position.top+height});
 	    $("#player4").css({left:position.left+width,top:position.top+height});
-	    Movement.registerKeys();
+	    
+	    var m = new Movement(server);
+	    connection.onopen = function() {
+		m.registerKeys();
+	    };
 	}
     }
 });
+       
