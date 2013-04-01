@@ -3,12 +3,11 @@ define(["board-renderer","movement", "dummyServer"], function(B, Movement, Serve
 	//Starts "game" when page hase loaded
 	start: function() {
 	    var gameBoard = B.renderBoard(Server.getGameBoard(19,19));
-	    console.log(gameBoard);
 	    $("#game").html(gameBoard);
 	    var game = $(".board");
 	    var position = game.position();
-	    var width = game.width()-20;
-	    var height = game.height()-30;
+	    var width = game.width()-$("#player1").width();
+	    var height = game.height()-$("#player1").height();
 	    $("#player1").css({left:position.left,top:position.top});
 	    $("#player2").css({left:position.left+width,top:position.top});
 	    $("#player3").css({left:position.left,top:position.top+height});

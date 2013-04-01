@@ -5,9 +5,10 @@ define([],function() {
 	    var row = [];
 	    for(var j = 1; j <= colums; ++j) {
 		if(i%2===0 && j%2===0) {
-		    console.log("permanent");
 		    row.push({type:"permanent"});
-		} else {
+		} else if(i===3 && (j===3||j===4)) {
+		    row.push({type:"blocked"});
+		}else {
 		    row.push({});
 		}
 	    }

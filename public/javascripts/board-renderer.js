@@ -13,7 +13,9 @@ define([], function() {
 		var style = "block";
 		if(gameBlock.type==="permanent") {
 		    style += " permanent";
-		    console.log("style: " + style);
+		}
+		if(gameBlock.type==="blocked") {
+		    style += " blocked";
 		}
 		var block = createElement("div",style);
 		row.appendChild(block);
