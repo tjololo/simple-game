@@ -12,9 +12,13 @@ define(["keyboard"], function(KeyboardJS) {
 	    $("#player"+json.player).animate({left:json.left, top:json.top},0);
 	} else if(json.type==="drop") {
 	    registerNewBomb(json.row,json.col);
+	} else if(json.type==="remove") {
+	    removeBlockers(json.tiles);
 	} else if(json.type==="playernbr") {
 	    playernbr = json.number;
 	    console.log("This is player number: " + playernbr);
+	} else if(json.type==="map") {
+	    window.setInterval(updateServer, 50);
 	}
     }
 
@@ -45,6 +49,12 @@ define(["keyboard"], function(KeyboardJS) {
 		    left: block.position().left,
 		    right: block.position().left+block.width()};
         }
+    }
+
+    function isBlockRemoveable(row,col) {
+	var row = $(".board").children()[row];
+        var block = $($(row).children()[col]);
+	return block.hasClass("blocked");
     }
 
     function canMove(direction) {
@@ -124,6 +134,41 @@ define(["keyboard"], function(KeyboardJS) {
 	sendToServer({type: "drop", row: getRow(), col: getColumn()});
     }
 
+    function removeExplodedBlocks(row, col) {
+	var blocksExploded = [];
+	if(isBlockRemoveable(row-1,col)) {
+	    blocksExploded.push({row:row-1,col:col});
+	}
+	if(isBlockRemoveable(row+1,col)) {
+	    blocksExploded.push({row:row+1,col:col});
+	}
+	if(isBlockRemoveable(row,col-1)){
+	    blocksExploded.push({row:row,col:col-1});
+	}
+	if(isBlockRemoveable(row,col+1)) {
+	    blocksExploded.push({row:row,col:col+1});
+	}
+	sendToServer({type:"remove", tiles:blocksExploded});
+    }
+
+    function removeBlockers(tiles) {
+	tiles.forEach(function(tile) {
+	    var el = $($(".board").children()[tile.row]).children()[tile.col];
+	    animateRemove($(el),1);
+	});
+    }
+
+    function animateRemove(el, nr) {
+	if(nr<=7) {
+	    el.addClass("remove"+nr);
+	    setTimeout(function() {
+		animateRemove(el,++nr);
+	    },50);
+	} else {
+	    el.removeClass("blocked remove1 remove2 remove3 remove4 remove5 remove6 remove7");
+	}
+    }
+
     function registerNewBomb(row, col) {
 	var tile = $($(".board").children()[row]).children()[col];
 	$(tile).addClass("bomb");
@@ -134,6 +179,7 @@ define(["keyboard"], function(KeyboardJS) {
 		    $(tile).addClass("bomb3");
 		    setTimeout(function() {
 			$(tile).removeClass("bomb3").removeClass("bomb2").removeClass("bomb");
+			removeExplodedBlocks(row,col);
 		    },100);
 		}, 100);
 	    }, 4000);
@@ -164,7 +210,7 @@ define(["keyboard"], function(KeyboardJS) {
 	KeyboardJS.on('down', moveDown, stopMove);
 	KeyboardJS.on('up', moveUp, stopMove);
 	KeyboardJS.on('space', dropBomb);
-	window.setInterval(updateServer, 50);
+
     }
 
     return function Movement(s){

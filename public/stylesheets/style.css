@@ -49,6 +49,41 @@ a {
     background-size: 100% auto;
 }
 
+.remove1 {
+    background:url(/images/sprites/remove.png);
+    background-size: 100% auto;
+}
+
+.remove2 {
+    background:url(/images/sprites/remove2.png);
+    background-size: 100% auto;
+}
+
+.remove3 {
+    background:url(/images/sprites/remove3.png);
+    background-size: 100% auto;
+}
+
+.remove4 {
+    background:url(/images/sprites/remove4.png);
+    background-size: 100% auto;
+}
+
+.remove5 {
+    background:url(/images/sprites/remove5.png);
+    background-size: 100% auto;
+}
+
+.remove6 {
+    background:url(/images/sprites/remove6.png);
+    background-size: 100% auto;
+}
+
+.remove7 {
+    background:url(/images/sprites/remove7.png);
+    background-size: 100% auto;
+}
+
 #player1{
     top: 0px;
     left: 0px;

@@ -19,6 +19,11 @@ define([],function() {
 	return board;
     }
 
+    function getMap() {
+	console.log("sending request for map");
+	connection.send(JSON.stringify({type:"genmap"}));
+    }
+
     function registerMessageListener(listener) {
 	consumers.push(listener);
     }
@@ -34,7 +39,7 @@ define([],function() {
 		consumer(message);
 	    });
 	}
-	this.getGameBoard = generateDummyBoard;
+	this.getMap = getMap;
 	this.registerMessageListener = registerMessageListener;
 	this.send = send;
     }

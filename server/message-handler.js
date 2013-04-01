@@ -1,3 +1,4 @@
+var BoardGenerator = require('./board-generator');
 (function() {
     function onMessage(msg, sendMessage) {
 	try {
@@ -8,9 +9,14 @@
 	}
 	if(json.type==="move") {
 	    sendMessage(msg.utf8Data);
-	} if(json.type=="drop") {
+	} else if(json.type==="drop") {
 	    sendMessage(msg.utf8Data);
-	}else {
+	} else if(json.type==="remove") {
+	    sendMessage(msg.utf8Data);
+	} else if(json.type==="genmap") {
+	    console.log("generation map");
+	    sendMessage(JSON.stringify({type:"map", map:BoardGenerator.genMap(19,19,9)}));
+	} else {
 	    sendMessage(JSON.stringify({msg:"test response"}));
 	}
     }
