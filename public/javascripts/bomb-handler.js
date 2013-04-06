@@ -91,7 +91,6 @@ define([], function() {
 	} else if(tile && tile.type==="open") {
 	    tilesOpen.push(tile);
 	}
-	console.log("affectedsays: " +tilesOpen.length);
 	return {blocked:tilesBlocked,open:tilesOpen};
     }
 
