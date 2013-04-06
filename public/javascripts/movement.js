@@ -1,4 +1,4 @@
-define(["keyboard"], function(KeyboardJS) {
+define(["keyboard", "bomb-handler"], function(KeyboardJS, B) {
     var playernbr = 1;
 
     function onMessage(message) {
@@ -11,9 +11,11 @@ define(["keyboard"], function(KeyboardJS) {
 	if(json.type==="move" && json.player !== playernbr) {
 	    $("#player"+json.player).animate({left:json.left, top:json.top},0);
 	} else if(json.type==="drop") {
-	    registerNewBomb(json.row,json.col);
+	    var bomb = json.bomb;
+	    bomb.callback = bombExplodedCallback;
+	    B.placeBomb(bomb);
 	} else if(json.type==="remove") {
-	    removeBlockers(json.tiles);
+	    B.triggerBomb(json.tiles);
 	} else if(json.type==="playernbr") {
 	    playernbr = json.number;
 	    console.log("This is player number: " + playernbr);
@@ -49,15 +51,6 @@ define(["keyboard"], function(KeyboardJS) {
 		    left: block.position().left,
 		    right: block.position().left+block.width()};
         }
-    }
-
-    function isBlockRemoveable(row,col) {
-	var elRow = $(".board").children()[row];
-        var block = $($(elRow).children()[col]);
-	if(block.hasClass("blocked")) {
-	    return {row:row, col:col};
-	}
-	return false;
     }
 
     function canMove(direction) {
@@ -134,62 +127,11 @@ define(["keyboard"], function(KeyboardJS) {
     }
  
     function dropBomb() {
-	sendToServer({type: "drop", row: getRow(), col: getColumn()});
+	sendToServer({type: "drop", bomb: {row: getRow(), col: getColumn()}});
     }
 
-    function removeExplodedBlocks(row, col) {
-	var tilesBlocked = [];
-	var tile = isBlockRemoveable(row-1,col);
-	if(tile) {
-	    tilesBlocked.push(tile);
-	}
-	tile = isBlockRemoveable(row+1,col)
-	if(tile) {
-	    tilesBlocked.push(tile);
-	}
-	tile = isBlockRemoveable(row,col-1)
-	if(tile){
-	    tilesBlocked.push(tile);
-	}
-	tile = isBlockRemoveable(row,col+1)
-	if(tile) {
-	    tilesBlocked.push(tile);
-	}
-	sendToServer({type:"remove", tiles:tilesBlocked});
-    }
-
-    function removeBlockers(tiles) {
-	tiles.forEach(function(tile) {
-	    var el = $($(".board").children()[tile.row]).children()[tile.col];
-	    animateRemove($(el),1);
-	});
-    }
-
-    function animateRemove(el, nr) {
-	if(nr<=7) {
-	    el.addClass("remove"+nr);
-	    setTimeout(function() {
-		animateRemove(el,++nr);
-	    },50);
-	} else {
-	    el.removeClass("blocked remove1 remove2 remove3 remove4 remove5 remove6 remove7");
-	}
-    }
-
-    function registerNewBomb(row, col, bomb) {
-	var tile = $($(".board").children()[row]).children()[col];
-	$(tile).addClass("bomb");
-	setTimeout(
-	    function() {
-		$(tile).addClass("bomb2");
-		setTimeout(function() {
-		    $(tile).addClass("bomb3");
-		    setTimeout(function() {
-			$(tile).removeClass("bomb3").removeClass("bomb2").removeClass("bomb");
-			removeExplodedBlocks(row,col);
-		    },100);
-		}, 100);
-	    }, 4800);
+    function bombExplodedCallback(tilesAffected) {
+	sendToServer({type:"remove", tiles:tilesAffected});
     }
 
     function disableDefaults() {

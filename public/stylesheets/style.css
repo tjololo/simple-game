@@ -84,6 +84,94 @@ a {
     background-size: 100% auto;
 }
 
+.exendleft1 {
+    background:url(/images/sprites/explode-left-end.png);
+    background-size: 100% auto;
+}
+
+.exendleft2 {
+    background:url(/images/sprites/explode-left-end2.png);
+    background-size: 100% auto;
+}
+
+.exendleft3 {
+    background:url(/images/sprites/explode-left-end3.png);
+    background-size: 100% auto;
+}
+
+.exendleft4 {
+    background:url(/images/sprites/explode-left-end4.png);
+    background-size: 100% auto;
+}
+
+.exendright1 {
+    background:url(/images/sprites/explode-right-end.png);
+    background-size: 100% auto;
+}
+.exendright2 {
+    background:url(/images/sprites/explode-right-end2.png);
+    background-size: 100% auto;
+}
+.exendright3 {
+    background:url(/images/sprites/explode-right-end3.png);
+    background-size: 100% auto;
+}
+.exendright4 {
+    background:url(/images/sprites/explode-right-end4.png);
+    background-size: 100% auto;
+}
+
+.exendup1 {
+    background:url(/images/sprites/explode-up-end.png);
+    background-size: 100% auto;
+}
+.exendup2 {
+    background:url(/images/sprites/explode-up-end2.png);
+    background-size: 100% auto;
+}
+.exendup3 {
+    background:url(/images/sprites/explode-up-end3.png);
+    background-size: 100% auto;
+}
+.exendup4 {
+    background:url(/images/sprites/explode-up-end4.png);
+    background-size: 100% auto;
+}
+
+.exenddown1 {
+    background:url(/images/sprites/explode-down-end.png);
+    background-size: 100% auto;
+}
+.exenddown2 {
+    background:url(/images/sprites/explode-down-end2.png);
+    background-size: 100% auto;
+}
+.exenddown3 {
+    background:url(/images/sprites/explode-down-end3.png);
+    background-size: 100% auto;
+}
+.exenddown4 {
+    background:url(/images/sprites/explode-down-end4.png);
+    background-size: 100% auto;
+}
+
+.exend1 {
+    background:url(/images/sprites/explode.png);
+    background-size: 100% auto;
+}
+.exend2 {
+    background:url(/images/sprites/explode2.png);
+    background-size: 100% auto;
+}
+.exend3 {
+    background:url(/images/sprites/explode3.png);
+    background-size: 100% auto;
+}
+.exend4 {
+    background:url(/images/sprites/explode4.png);
+    background-size: 100% auto;
+}
+
 #player1{
     top: 0px;
     left: 0px;
